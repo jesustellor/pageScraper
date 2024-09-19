@@ -1,0 +1,19 @@
+{
+  "name": "pagescraper",
+  "version": "1.0.0",
+  "description": "Building and api with data from website of choice.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesustellor/pageScraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesustellor/pageScraper/issues"
+  },
+  "homepage": "https://github.com/jesustellor/pageScraper#readme"
+}
