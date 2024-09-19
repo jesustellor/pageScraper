@@ -4,7 +4,8 @@
   "description": "Building and api with data from website of choice.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/jesustellor/pageScraper/issues"
   },
-  "homepage": "https://github.com/jesustellor/pageScraper#readme"
+  "homepage": "https://github.com/jesustellor/pageScraper#readme",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5"
+  }
 }
