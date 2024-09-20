@@ -4,18 +4,22 @@ const app = express();
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const articles = [];
+
 
 // list of websites to scrape.. adjust as needed
 const newspapers = [
     {
     name: "theTimes",
-    address: "https://www.thetimes.com/",
+    address: "https://www.thetimes.com",
     },
     {
     name: "theGuardian",
     address: "https://www.theguardian.com/uk",
     },
-    // {
+    // does not seem to want to work with theHill, will look into it.. 
+    // the only difference is the accept cookies button.
+    // { 
     // name: "theHill",
     // address: "https://thehill.com/video/full-show-fed-cuts-interest-rates-joe-rogan-shocked-trump-1st-shooting-forgotten-west-wing-is-25/10057614/",
     // },
@@ -29,7 +33,6 @@ const newspapers = [
     }
 ]
 
-const articles = [];
 // adjust cheerio selector as needed, set to a:contains
 newspapers.forEach(item => {
     axios.get(item.address)
@@ -39,10 +42,20 @@ newspapers.forEach(item => {
         $('a:contains("Watch")', html).each(function() {
             const title = $(this).text();
             const url = $(this).attr('href');
+// checking if it does not include http if not include it else push as is..
+        if (!url.includes('http')) {
+            articles.push({
+                title,
+                url: item.address + url,
+                source: item.name
+            })
+        } else {
             articles.push({
                 title,
                 url,
+                source: item.name
             })
+        }
         })
     })
 })
@@ -54,9 +67,12 @@ app.get('/', (req, res) => {
     res.json("Welcome to my API")
 })
 
+
+// display response which has articles array on browser.
 app.get('/news', (req, res) => {
     res.json(articles)
 })
+
 
 //creating global array to push data to. moved to top to cover
 // newspapers array.
