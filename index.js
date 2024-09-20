@@ -73,6 +73,32 @@ app.get('/news', (req, res) => {
     res.json(articles)
 })
 
+//getting individual links for each item in array.. or links in newspapers array
+app.get('/news/:newspaperID', (req, res) => {
+    const newspaperID = req.params.newspaperID;
+    const link = newspapers.filter(item => item.name == newspaperID)[0].address;
+    const name = newspapers.filter(item => item.name == newspaperID)[0].name;
+    if(name == newspaperID){
+        axios.get(link)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const specificArticles = [];
+            $('a:contains("Watch")', html).each(function() {
+                const title = $(this).text();
+                const url = $(this).attr('href');
+                specificArticles.push({
+                    title,
+                    url
+                })
+            })
+            res.json(specificArticles);
+        })
+    }else{
+        res.json("Invalid newspaper name")
+    } 
+})
+
 
 //creating global array to push data to. moved to top to cover
 // newspapers array.
