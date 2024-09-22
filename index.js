@@ -75,10 +75,14 @@ app.get('/news', (req, res) => {
 
 //getting individual links for each item in array.. or links in newspapers array
 app.get('/news/:newspaperID', (req, res) => {
+    //saving user url input to variable
     const newspaperID = req.params.newspaperID;
-    const link = newspapers.filter(item => item.name == newspaperID)[0].address;
-    const name = newspapers.filter(item => item.name == newspaperID)[0].name;
-    if(name == newspaperID){
+    // checking if newspaperID is in array and return array with object if found.
+    const check = newspapers.filter(item => item.name == newspaperID); 
+    // if array is not empty..
+    if(check.length > 0) {
+        const link = newspapers.filter(item => item.name == newspaperID)[0].address;
+
         axios.get(link)
         .then(response => {
             const html = response.data;
@@ -94,10 +98,15 @@ app.get('/news/:newspaperID', (req, res) => {
             })
             res.json(specificArticles);
         })
+        .catch(err => console.log(err));
+        
     }else{
         res.json("Invalid newspaper name")
+        
     } 
 })
+
+
 
 
 //creating global array to push data to. moved to top to cover
